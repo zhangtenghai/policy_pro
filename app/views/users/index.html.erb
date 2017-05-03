@@ -1,0 +1,67 @@
+<p id="notice"><%= notice %></p>
+
+<h1>已预约用户</h1>
+<%=form_tag users_path, method: :get do %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <input type="text" name="search" value="<%=params[:search]%>" placeholder="关键字">
+      </div>
+      <div class="col-md-3">
+        开始时间
+        <input type="text" id="begin_at" name="begin_at" value="<%=params[:begin_at]%>" placeholder="开始时间">
+      </div>
+      <div class="col-md-3">
+        结束时间
+        <input type="text" id="end_at" name="end_at" value="<%=params[:end_at]%>" placeholder="结束时间">
+      </div>
+      <div  class="col-md-2">
+        <%= submit_tag "查询"%><%=link_to '导出', export_users_path %>
+      </div>
+    </div>
+ </div>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>电话</th>
+      <th>地址</th>
+      <th>录入时间</th>
+      <th colspan="3">操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.phone %></td>
+        <td><%= user.address %></td>
+        <td><%= user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <td><%= link_to '查看详细', user %></td>
+       <!--  <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+  <%= paginate @users %>
+</table>
+
+<br>
+
+<%= link_to '新增用户', new_user_path %>
+<script type="text/javascript">
+$(document).ready(function() {
+  moment.locale('zh-cn');
+  $('#begin_at').datetimepicker({
+    format: "YYYY-MM-DD HH:mm:ss"
+  });
+  $('#end_at').datetimepicker({
+    format: "yyyy-mm-dd HH:mm:ss"
+  });
+
+});
+  
+</script>
