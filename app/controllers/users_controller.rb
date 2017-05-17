@@ -4,8 +4,11 @@ class UsersController < ApplicationController
 
   def query(params)
     users = User.quick_search(params[:search])
-    users = @users.where("created_at >= ?", params[:begin_at].to_datetime) if !params[:begin_at].blank?
-    users = @users.where("created_at <= ?", params[:end_at].to_datetime) if !params[:end_at].blank?
+    users = users.where("created_at >= ?", params[:begin_at].to_datetime) if !params[:begin_at].blank?
+    users = users.where("created_at <= ?", params[:end_at].to_datetime) if !params[:end_at].blank?
+    users = users.where(province: params[:province]) if !params[:province].blank?
+    users = users.where(city: params[:city]) if !params[:city].blank?
+    users = users.where(district: params[:district]) if !params[:district].blank?
     users = users.order("id desc")
     users
   end
@@ -80,6 +83,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :phone, :address)
+      params.require(:user).permit(:name, :phone, :address, :province, :city, :district, :street)
     end
 end

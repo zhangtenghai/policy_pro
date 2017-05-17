@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>已预约用户</h1>
+<h1><a href="/users">已预约用户</a></h1>
 <%=form_tag users_path, method: :get do %>
   <div class="container">
     <div class="row">
@@ -15,8 +15,18 @@
         结束时间
         <input type="text" id="end_at" name="end_at" value="<%=params[:end_at]%>" placeholder="结束时间">
       </div>
+      
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div data-toggle="distpicker" id="dist">
+          <select name="province" data-province="<%=params[:province]%>"></select>
+          <select name="city" data-city="<%=params[:city]%>"></select>
+          <select name="district" data-district="<%=params[:district]%>"></select>
+        </div>       
+      </div>
       <div  class="col-md-2">
-        <%= submit_tag "查询"%><%=link_to '导出', export_users_path %>
+        <%= submit_tag "查询"%><%=link_to '导出', export_users_path(search: params[:search], begin_at: params[:begin_at], end_at: params[:end_at], province: params[:province], city:params[:city], district: params[:district]) %>
       </div>
     </div>
  </div>
@@ -38,9 +48,9 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.phone %></td>
-        <td><%= user.address %></td>
+        <td><%= "#{user.province}#{user.city}#{user.district}#{user.address}"%></td>
         <td><%= user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
-        <td><%= link_to '查看详细', user %></td>
+        <td><%= link_to '查看详细', edit_user_path(user) %></td>
        <!--  <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
@@ -61,7 +71,7 @@ $(document).ready(function() {
   $('#end_at').datetimepicker({
     format: "YYYY-MM-DD HH:mm:ss"
   });
-
+  $('#dist').distpicker();
 });
   
 </script>
