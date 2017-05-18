@@ -2,7 +2,7 @@ require 'csv'
 class User < ApplicationRecord
   include Searchable
   quick_search :name, :phone, :address
-  validates_presence_of :name, :phone, :address
+  validates_presence_of :name, :phone, :address, :province, :city, :district
 
   paginates_per 30
 

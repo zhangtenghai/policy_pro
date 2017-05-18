@@ -249,6 +249,17 @@ zh-CN:
   unauthorized:
     manage:
       all: "你没有权限执行该操作."
+  activerecord:
+    models:
+      user: 用户
+    attributes:
+      user:
+        name: 名字
+        phone: 电话
+        address:  乡镇街道
+        province:  省
+        city:  市
+        district: 区
   # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
 
         
